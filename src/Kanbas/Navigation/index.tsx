@@ -11,7 +11,7 @@ function KanbasNavigation() {
     const links = [
         { label: "Account", icon: <img src={profileimage} alt="Profile" className="profile-image" /> },
         { label: "Dashboard", icon: <FaTachometerAlt className="fs-2" /> },
-        { label: "Courses", icon: <FaBook className="fs-2" /> },
+        { label: "Courses", icon: <FaBook className="fs-2" />, path: "/Kanbas/Dashboard" },
         { label: "Calendar", icon: <FaRegCalendarAlt className="fs-2" /> },
         { label: "Inbox", icon: <FaInbox className="fs-2" /> },
         { label: "History", icon: <RiHistoryFill className="fs-2" /> },
@@ -30,7 +30,7 @@ function KanbasNavigation() {
             </li>
             {links.map((link, index) => (
                 <li key={index} className={pathname.includes(link.label) ? "wd-active" : ""}>
-                    <Link to={`/Kanbas/${link.label}`}>
+                    <Link to={link.path || `/Kanbas/${link.label}`}>
                         <span style={{ color: 'red' }}>{link.icon}</span>
                         {link.label}
                     </Link>
