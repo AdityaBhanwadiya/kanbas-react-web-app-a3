@@ -18,7 +18,7 @@ function ModuleList() {
     } | null>(null);
     return (
         <>
-            <div className="row">
+            <div className="row" style={{marginTop: "20px"}}>
                 <div className="col d-flex justify-content-end mb-2 gap-1">
                     <button type="button" className="btn" style={{ backgroundColor: "#f5f5f5", border: "1px solid lightgray" }}>Collapse All</button>
                     <button type="button" className="btn" style={{ backgroundColor: "#f5f5f5", border: "1px solid lightgray" }}>
