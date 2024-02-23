@@ -36,7 +36,7 @@ function Assignments() {
                 <hr />
             </div>
 
-            <ul className="list-group square-list-group mb-3">
+            <ul className="list-group square-list-group mb-3" style={{marginRight: "20px"}}>
                 <li className="list-group-item list-group-item" style={{ backgroundColor: "#f5f5f5", border: "1px solid lightgray" }}>
                     <div className="d-flex justify-content-start align-items-center">
                         <TbGripVertical className="me-2" />
