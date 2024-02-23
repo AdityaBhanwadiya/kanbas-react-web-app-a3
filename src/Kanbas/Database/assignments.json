@@ -1,0 +1,116 @@
+[
+    { "_id": "A101", "title": "Propulsion Assignment", "course": "RS101" },
+    { "_id": "A102", "title": "Combustion Analysis", "course": "RS101" },
+    { "_id": "A103", "title": "Nozzle Design Project", "course": "RS101" },
+    { "_id": "A201", "title": "Aerodynamics Quiz", "course": "RS102" },
+    { "_id": "A202", "title": "Flow Analysis", "course": "RS102" },
+    { "_id": "A203", "title": "Heating Analysis", "course": "RS102" },
+    { "_id": "A301", "title": "Structural Design Task", "course": "RS103" },
+    { "_id": "A302", "title": "Orbital Calculations", "course": "RS103" },
+    { "_id": "A303", "title": "Systems Engineering Exam", "course": "RS103" },
+    {
+      "_id": "A104",
+      "title": "Rocket Propulsion Analysis",
+      "course": "RS101"
+    },
+    {
+      "_id": "A105",
+      "title": "Thermal Management Project",
+      "course": "RS101"
+    },
+    {
+      "_id": "A106",
+      "title": "Spacecraft Propulsion Lab",
+      "course": "RS101"
+    },
+    {
+      "_id": "A204",
+      "title": "Wind Tunnel Experiment",
+      "course": "RS102"
+    },
+    {
+      "_id": "A205",
+      "title": "Hypersonic Flight Analysis",
+      "course": "RS102"
+    },
+    {
+      "_id": "A206",
+      "title": "Fluid Dynamics Simulation",
+      "course": "RS102"
+    },
+    {
+      "_id": "A304",
+      "title": "Space Shuttle Structural Design",
+      "course": "RS103"
+    },
+    {
+      "_id": "A305",
+      "title": "Satellite Communication Systems",
+      "course": "RS103"
+    },
+    {
+      "_id": "A306",
+      "title": "Aerospace Systems Optimization",
+      "course": "RS103"
+    },
+    {
+      "_id": "A401",
+      "title": "Space Exploration Mission Planning",
+      "course": "RS104"
+    },
+    {
+      "_id": "A402",
+      "title": "Advanced Rocket Propulsion",
+      "course": "RS104"
+    },
+    {
+      "_id": "A403",
+      "title": "Astrodynamics and Celestial Mechanics",
+      "course": "RS104"
+    },
+    {
+      "_id": "A504",
+      "title": "Satellite Navigation Systems",
+      "course": "RS105"
+    },
+    {
+      "_id": "A505",
+      "title": "Advanced Hypersonic Aerodynamics",
+      "course": "RS105"
+    },
+    {
+      "_id": "A506",
+      "title": "Spacecraft Systems Integration",
+      "course": "RS105"
+    },
+    {
+      "_id": "A604",
+      "title": "Advanced Space Structures",
+      "course": "RS106"
+    },
+    {
+      "_id": "A605",
+      "title": "Planetary Science Research Project",
+      "course": "RS106"
+    },
+    {
+      "_id": "A606",
+      "title": "Space Mission Analysis",
+      "course": "RS106"
+    },
+    {
+      "_id": "A704",
+      "title": "Emerging Technologies in Space",
+      "course": "RS107"
+    },
+    {
+      "_id": "A705",
+      "title": "Space Policy and Governance",
+      "course": "RS107"
+    },
+    {
+      "_id": "A706",
+      "title": "Commercial Space Ventures",
+      "course": "RS107"
+    }
+  ]
