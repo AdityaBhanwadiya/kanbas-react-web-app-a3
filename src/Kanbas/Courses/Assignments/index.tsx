@@ -1,23 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaCaretDown, FaCheckCircle, FaEllipsisV, FaPlusCircle } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
-import { assignments } from "../../Database";
 import './index.css';
 import { TbGripVertical } from "react-icons/tb";
 import { FaPlus } from "react-icons/fa6";
+import db from "../../Database";
 
 function Assignments() {
     const { courseId } = useParams();
+    const [assignments, setAssignments] = useState(db.assignments);
     const assignmentList = assignments.filter(
         (assignment) => assignment.course === courseId);
-        
+
     return (
         <>
-            <div className="d-flex gap-1" style={{ marginRight: "20px", marginTop: "20px"}}>
+            <div className="d-flex gap-1" style={{ marginRight: "20px", marginTop: "20px" }}>
                 <div className="me-auto w-25"><input type="text" className="form-control"
                     placeholder="Search for Assignment" /></div>
                 <button type="button" className="btn" style={{ backgroundColor: "#f5f5f5", border: "1px solid lightgray" }}><i className="fa-solid fa-plus"></i>
-                <FaPlus /> Group</button>
+                    <FaPlus /> Group</button>
                 <button type="button" className="btn btn-danger"><FaPlus /> Assignment</button>
                 <div className="dropdown">
                     <button className="btn" type="button" data-bs-toggle="dropdown"
@@ -36,7 +37,7 @@ function Assignments() {
                 <hr />
             </div>
 
-            <ul className="list-group square-list-group mb-3" style={{marginRight: "20px"}}>
+            <ul className="list-group square-list-group mb-3" style={{ marginRight: "20px" }}>
                 <li className="list-group-item list-group-item" style={{ backgroundColor: "#f5f5f5", border: "1px solid lightgray" }}>
                     <div className="d-flex justify-content-start align-items-center">
                         <TbGripVertical className="me-2" />

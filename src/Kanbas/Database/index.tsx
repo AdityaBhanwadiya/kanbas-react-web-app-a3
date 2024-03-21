@@ -6,4 +6,4 @@ import enrollments from "./enrollments.json";
 import grades from "./grades.json";
 
 
-export { courses, modules, assignments, users, enrollments, grades };
+export default { courses, modules, assignments, users, enrollments, grades };

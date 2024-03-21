@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import "./index.css";
-import { modules } from "../../Database";
 import { FaEllipsisV, FaCheckCircle, FaPlusCircle, FaCaretDown } from "react-icons/fa";
 import { useParams } from "react-router";
 import { MdVisibility } from 'react-icons/md';
 import { TbGripVertical } from "react-icons/tb";
+import db from "../../Database";
 
 function ModuleList() {
     const { courseId } = useParams();
+    const [modules, setModules] = useState(db.modules);
+    const [module, setModule] = useState({
+        _id: "",
+        name: "",
+        description: "",
+        course: "",
+    });
     const modulesList = modules.filter((module) => module.course === courseId);
     const [selectedModule, setSelectedModule] = useState<{
         _id: string;
@@ -16,9 +23,65 @@ function ModuleList() {
         course: string;
         lessons?: { _id: string; name: string; description: string; module: string; }[];
     } | null>(null);
+    const [moduleList, setModuleList] = useState<any[]>(modules);
+
+
+    
+
+    const addModule = () => {
+        const newModule = {
+            _id: new Date().getTime().toString(),
+            name: module.name,
+            description: module.description,
+            course: courseId || "",
+        };
+        const newModuleList = [newModule, ...moduleList];
+        setModuleList(newModuleList);
+        setModules(newModuleList);
+        setModule({ // Reset module state
+            _id: "",
+            name: "",
+            description: "",
+            course: "",
+        });
+    };
+    
+    
+
+
+    const deleteModule = (moduleId: string) => {
+        const newModuleList = moduleList.filter((module) => module._id !== moduleId);
+        setModuleList(newModuleList);
+        // If you need to update the main modules state as well
+        const newModules = modules.filter((module) => module._id !== moduleId);
+        setModules(newModules);
+    };
+
+
+
+    const updateModule = () => {
+        setModules(
+            modules.map((c) => {
+                if (c._id === module._id) {
+                    return module;
+                } else {
+                    return c;
+                }
+            })
+        );
+        setModule({ // Reset module state
+            _id: "",
+            name: "",
+            description: "",
+            course: "",
+        });
+        
+    };
+
+
     return (
         <>
-            <div className="row" style={{marginTop: "20px"}}>
+            <div className="row" style={{ marginTop: "20px" }}>
                 <div className="col d-flex justify-content-end mb-2 gap-1">
                     <button type="button" className="btn" style={{ backgroundColor: "#f5f5f5", border: "1px solid lightgray" }}>Collapse All</button>
                     <button type="button" className="btn" style={{ backgroundColor: "#f5f5f5", border: "1px solid lightgray" }}>
@@ -50,43 +113,83 @@ function ModuleList() {
                     </div>
                 </div>
             </div>
-            <div className="row" style={{paddingTop: "10px"}}>
-                <hr/>
+            <div className="row" style={{ paddingTop: "10px" }}>
+                <hr />
             </div>
-            <ul className="list-group" style={{paddingTop: "10px"}}>
-                {modulesList.map((module, index) => (
-                    <li key={index}
-                        className="list-group-item list-group-item-parent"
-                        style={{ backgroundColor: "#f5f5f5", border: "1px solid lightgray" }}
-                        onClick={() => setSelectedModule(selectedModule === module ? null : module)}>
-                        <div>
-                            <TbGripVertical className="me-2" />
-                            <FaCaretDown className="me-2" />
-                            {module.name}
-                            <span className="float-end">
-                                <FaCheckCircle className="text-success" />
-                                <FaPlusCircle className="ms-2" />
-                                <FaEllipsisV className="ms-2" />
-                            </span>
-                        </div>
-                        {selectedModule === module && module.lessons && (
-                            <ul className="list-group" style={{ marginTop: "10px" }}>
-                                {module.lessons?.map((lesson, index) => (
+            <ul className="list-group" style={{ paddingTop: "10px" }}>
+                <li className="list-group-item">
+                    <button onClick={() => { addModule() }}>Add</button>
+                    <button onClick={updateModule}>
+                        Update
+                    </button>
 
-                                    <li className="list-group-item list-group-item-child"
-                                        key={index}>
-                                        <TbGripVertical className="me-2" />
-                                        {lesson.name}
-                                        <span className="float-end">
-                                            <FaCheckCircle className="text-success" />
-                                            <TbGripVertical className="ms-2" />
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </li>
-                ))}
+                    <input value={module.name}
+                        onChange={(e) => setModule({
+                            ...module, name: e.target.value
+                        })}
+                    />
+                    <textarea value={module.description}
+                        onChange={(e) => setModule({
+                            ...module, description: e.target.value
+                        })}
+                    />
+                </li>
+
+
+                {modulesList
+                    .filter((module) => module.course === courseId)
+                    .map((module, index) => (
+                        <li key={index}
+                            className="list-group-item list-group-item-parent"
+                            style={{ backgroundColor: "#f5f5f5", border: "1px solid lightgray" }}
+                            onClick={() => setSelectedModule(selectedModule === module ? null : module)}>
+
+                            {/* Edit button */}
+                            <button onClick={(event) => {
+                                event.preventDefault();
+                                setModule(module);
+                            }}>
+                                Edit
+                            </button>
+
+
+
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation(); // Prevent parent click event
+                                    deleteModule(module._id)
+                                }}>
+                                Delete
+                            </button>
+
+                            <div>
+                                <TbGripVertical className="me-2" />
+                                <FaCaretDown className="me-2" />
+                                {module.name}
+                                <span className="float-end">
+                                    <FaCheckCircle className="text-success" />
+                                    <FaPlusCircle className="ms-2" />
+                                    <FaEllipsisV className="ms-2" />
+                                </span>
+                            </div>
+                            {selectedModule === module && module.lessons && (
+                                <ul className="list-group" style={{ marginTop: "10px" }}>
+                                    {module.lessons?.map((lesson, index) => (
+
+                                        <li className="list-group-item list-group-item-child"
+                                            key={index}>
+                                            <TbGripVertical className="me-2" />
+                                            {lesson.name}
+                                            <span className="float-end">
+                                                <FaCheckCircle className="text-success" />
+                                                <TbGripVertical className="ms-2" />
+                                            </span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </li>
+                    ))}
             </ul>
         </>
     );

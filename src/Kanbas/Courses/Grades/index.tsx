@@ -1,4 +1,4 @@
-import { assignments, enrollments, grades, users } from "../../Database";
+
 import { useParams } from "react-router-dom";
 import { FaGear } from "react-icons/fa6";
 import { LuImport } from "react-icons/lu";
@@ -6,10 +6,18 @@ import { CiExport } from "react-icons/ci";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { CiFilter } from "react-icons/ci";
 import './index.css';
+import db from "../../Database";
+import { useState } from "react";
 
 
 function Grades() {
     const { courseId } = useParams();
+    const [assignments, setAssignments] = useState(db.assignments);
+    const [enrollments, setEnrollments] = useState(db.enrollments);
+    const [grades, setgrades] = useState(db.grades);
+    const [users, setusers] = useState(db.users);
+
+
     const as = assignments.filter((assignment) => assignment.course === courseId);
     const es = enrollments.filter((enrollment) => enrollment.course === courseId);
     return (
@@ -17,11 +25,11 @@ function Grades() {
             <div className="d-flex gap-2 align-items-center justify-content-end"
                 style={{ marginTop: "20px" }}>
                 <button type="button" className="btn" style={{ backgroundColor: "#f5f5f5", border: "1px solid lightgray" }}>
-                    <LuImport style={{marginRight: "5px", fontSize: "20px"}}/>Import</button>
+                    <LuImport style={{ marginRight: "5px", fontSize: "20px" }} />Import</button>
                 <div className="dropdown">
                     <button className="btn dropdown-toggle" style={{ backgroundColor: "#f5f5f5", border: "1px solid lightgray" }} type="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <CiExport style={{marginRight: "5px", fontSize: "20px"}}/> Export
+                        <CiExport style={{ marginRight: "5px", fontSize: "20px" }} /> Export
                     </button>
                     <ul className="dropdown-menu">
                         <li><a className="dropdown-item" href="#">Export option 1</a></li>
@@ -56,7 +64,7 @@ function Grades() {
             </div>
             <div className="row mb-3">
                 <div className="col-md-6">
-                    <button type="button" className="btn" style={{ backgroundColor: "#f5f5f5", border: "1px solid lightgray" }}><CiFilter style={{marginRight: "5px", fontSize: "20px"}}/>Apply Filters</button>
+                    <button type="button" className="btn" style={{ backgroundColor: "#f5f5f5", border: "1px solid lightgray" }}><CiFilter style={{ marginRight: "5px", fontSize: "20px" }} />Apply Filters</button>
                 </div>
             </div>
             <div className="table-responsive" >
