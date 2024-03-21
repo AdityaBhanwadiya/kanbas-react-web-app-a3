@@ -5,20 +5,8 @@ import Dashboard from './Dashboard';
 import Courses from './Courses';
 import db from './Database';
 import KanbasNavigation from './Navigation';
-
-interface CoursesProps {
-  courses: {
-    _id: string;
-    name: string;
-    secondary: string;
-    ternary: string;
-    number: string;
-    startDate: string;
-    endDate: string;
-    image: string;
-  }[];
-}
-
+import store from "./store";
+import { Provider } from "react-redux";
 
 
 function Kanbas() {
@@ -62,33 +50,33 @@ function Kanbas() {
   };
 
   return (
+    <Provider store={store}>
+      <div className="d-flex">
+        <KanbasNavigation />
+        <div>
+          <Routes>
+            <Route path="/" element={<Navigate to="Dashboard" />} />
+            <Route path="Account" element={<h1>Account</h1>} />
+            <Route
+              path="Dashboard"
+              element={
+                <Dashboard
+                  courses={courses}
+                  course={course}
+                  setCourse={setCourse}
+                  addNewCourse={addNewCourse}
+                  deleteCourse={deleteCourse}
+                  updateCourse={updateCourse}
+                />
+              }
+            />
+            <Route path="Courses/:courseId/*" element={
+              <Courses courses={courses} />} />
 
-    <div className="d-flex">
-      <KanbasNavigation />
-      <div>
-        <Routes>
-          <Route path="/" element={<Navigate to="Dashboard" />} />
-          <Route path="Account" element={<h1>Account</h1>} />
-          <Route
-            path="Dashboard"
-            element={
-              <Dashboard
-                courses={courses}
-                course={course}
-                setCourse={setCourse}
-                addNewCourse={addNewCourse}
-                deleteCourse={deleteCourse}
-                updateCourse={updateCourse}
-              />
-            }
-          />
-          <Route path="Courses/:courseId/*" element={
-            <Courses courses={courses} />} />
-
-        </Routes>
+          </Routes>
+        </div>
       </div>
-    </div>
-
+    </Provider>
   );
 }
 export default Kanbas;

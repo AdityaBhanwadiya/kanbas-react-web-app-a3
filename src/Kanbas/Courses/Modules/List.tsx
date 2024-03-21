@@ -6,16 +6,17 @@ import { MdVisibility } from 'react-icons/md';
 import { TbGripVertical } from "react-icons/tb";
 import db from "../../Database";
 
+import { useSelector, useDispatch } from "react-redux";
+import {
+    addModule,
+    deleteModule,
+    updateModule,
+    setModule,
+} from "./reducer";
+import { KanbasState } from "../../store";
+
 function ModuleList() {
     const { courseId } = useParams();
-    const [modules, setModules] = useState(db.modules);
-    const [module, setModule] = useState({
-        _id: "",
-        name: "",
-        description: "",
-        course: "",
-    });
-    const modulesList = modules.filter((module) => module.course === courseId);
     const [selectedModule, setSelectedModule] = useState<{
         _id: string;
         name: string;
@@ -23,61 +24,14 @@ function ModuleList() {
         course: string;
         lessons?: { _id: string; name: string; description: string; module: string; }[];
     } | null>(null);
-    const [moduleList, setModuleList] = useState<any[]>(modules);
-
-
-    
-
-    const addModule = () => {
-        const newModule = {
-            _id: new Date().getTime().toString(),
-            name: module.name,
-            description: module.description,
-            course: courseId || "",
-        };
-        const newModuleList = [newModule, ...moduleList];
-        setModuleList(newModuleList);
-        setModules(newModuleList);
-        setModule({ // Reset module state
-            _id: "",
-            name: "",
-            description: "",
-            course: "",
-        });
-    };
-    
-    
-
-
-    const deleteModule = (moduleId: string) => {
-        const newModuleList = moduleList.filter((module) => module._id !== moduleId);
-        setModuleList(newModuleList);
-        // If you need to update the main modules state as well
-        const newModules = modules.filter((module) => module._id !== moduleId);
-        setModules(newModules);
-    };
 
 
 
-    const updateModule = () => {
-        setModules(
-            modules.map((c) => {
-                if (c._id === module._id) {
-                    return module;
-                } else {
-                    return c;
-                }
-            })
-        );
-        setModule({ // Reset module state
-            _id: "",
-            name: "",
-            description: "",
-            course: "",
-        });
-        
-    };
-
+    const moduleList = useSelector((state: KanbasState) =>
+        state.modulesReducer.modules);
+    const module = useSelector((state: KanbasState) =>
+        state.modulesReducer.module);
+    const dispatch = useDispatch();
 
     return (
         <>
@@ -118,25 +72,24 @@ function ModuleList() {
             </div>
             <ul className="list-group" style={{ paddingTop: "10px" }}>
                 <li className="list-group-item">
-                    <button onClick={() => { addModule() }}>Add</button>
-                    <button onClick={updateModule}>
+                    <button onClick={() => dispatch(addModule({ ...module, course: courseId }))}>
+                        Add</button>
+                    <button onClick={() => dispatch(updateModule(module))}>
                         Update
                     </button>
 
-                    <input value={module.name}
-                        onChange={(e) => setModule({
-                            ...module, name: e.target.value
-                        })}
-                    />
-                    <textarea value={module.description}
-                        onChange={(e) => setModule({
-                            ...module, description: e.target.value
-                        })}
-                    />
+                    <input value={module.name || ''}
+                        onChange={(e) => dispatch(setModule({ ...module, name: e.target.value }))
+                        } />
+                    <textarea value={module.description || ''}
+                        onChange={(e) =>
+                            dispatch(setModule({ ...module, description: e.target.value }))
+                        } />
+
                 </li>
 
 
-                {modulesList
+                {moduleList
                     .filter((module) => module.course === courseId)
                     .map((module, index) => (
                         <li key={index}
@@ -145,20 +98,14 @@ function ModuleList() {
                             onClick={() => setSelectedModule(selectedModule === module ? null : module)}>
 
                             {/* Edit button */}
-                            <button onClick={(event) => {
-                                event.preventDefault();
-                                setModule(module);
-                            }}>
+                            <button onClick={() => dispatch(setModule(module))}>
                                 Edit
                             </button>
 
 
 
                             <button
-                                onClick={(e) => {
-                                    e.stopPropagation(); // Prevent parent click event
-                                    deleteModule(module._id)
-                                }}>
+                                onClick={() => dispatch(deleteModule(module._id))}>
                                 Delete
                             </button>
 
@@ -174,7 +121,7 @@ function ModuleList() {
                             </div>
                             {selectedModule === module && module.lessons && (
                                 <ul className="list-group" style={{ marginTop: "10px" }}>
-                                    {module.lessons?.map((lesson, index) => (
+                                    {module.lessons?.map((lesson: any, index: any) => (
 
                                         <li className="list-group-item list-group-item-child"
                                             key={index}>
