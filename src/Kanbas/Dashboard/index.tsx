@@ -5,12 +5,12 @@ import { LiaComments } from "react-icons/lia";
 
 function Dashboard(
     { courses, course, setCourse, addNewCourse,
-      deleteCourse, updateCourse }: {
-      courses: any[]; course: any; setCourse: (course: any) => void;
-      addNewCourse: () => void; deleteCourse: (course: any) => void;
-      updateCourse: () => void; })
-     {
-    
+        deleteCourse, updateCourse }: {
+            courses: any[]; course: any; setCourse: (course: any) => void;
+            addNewCourse: () => void; deleteCourse: (course: any) => void;
+            updateCourse: () => void;
+        }) {
+
     return (
         <div className="p-4">
             <div className="row">
@@ -18,21 +18,48 @@ function Dashboard(
                 <hr />
             </div>
 
-            <input value={course.name} className="form-control"
-                onChange={(e) => setCourse({ ...course, name: e.target.value })} />
-            <input value={course.number} className="form-control"
-                onChange={(e) => setCourse({ ...course, number: e.target.value })} />
-            <input value={course.startDate} className="form-control" type="date"
-                onChange={(e) => setCourse({ ...course, startDate: e.target.value })} />
-            <input value={course.endDate} className="form-control" type="date"
-                onChange={(e) => setCourse({ ...course, endDate: e.target.value })} />
-            <button onClick={addNewCourse} >
-                Add
-            </button>
-
-            <button onClick={updateCourse} >
-                Update
-            </button>
+            <div style={{ maxWidth: "100vw", margin: "0 auto", padding: "20px", border: "1px solid #ccc", borderRadius: "5px" }}>
+                <input
+                    value={course.name}
+                    className="form-control"
+                    style={{ marginBottom: "10px", padding: "8px", width: "100%", boxSizing: "border-box", border: "1px solid #ccc", borderRadius: "5px" }}
+                    placeholder="Course Name"
+                    onChange={(e) => setCourse({ ...course, name: e.target.value })}
+                />
+                <input
+                    value={course.number}
+                    className="form-control"
+                    style={{ marginBottom: "10px", padding: "8px", width: "100%", boxSizing: "border-box", border: "1px solid #ccc", borderRadius: "5px" }}
+                    placeholder="Course Number"
+                    onChange={(e) => setCourse({ ...course, number: e.target.value })}
+                />
+                <input
+                    value={course.startDate}
+                    className="form-control"
+                    style={{ marginBottom: "10px", padding: "8px", width: "100%", boxSizing: "border-box", border: "1px solid #ccc", borderRadius: "5px" }}
+                    type="date"
+                    onChange={(e) => setCourse({ ...course, startDate: e.target.value })}
+                />
+                <input
+                    value={course.endDate}
+                    className="form-control"
+                    style={{ marginBottom: "10px", padding: "8px", width: "100%", boxSizing: "border-box", border: "1px solid #ccc", borderRadius: "5px" }}
+                    type="date"
+                    onChange={(e) => setCourse({ ...course, endDate: e.target.value })}
+                />
+                <button
+                    style={{ display: "block", width: "100%", padding: "10px", marginTop: "10px", backgroundColor: "#007bff", color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer" }}
+                    onClick={addNewCourse}
+                >
+                    Add
+                </button>
+                <button
+                    style={{ display: "block", width: "100%", padding: "10px", marginTop: "10px", backgroundColor: "#007bff", color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer" }}
+                    onClick={updateCourse}
+                >
+                    Update
+                </button>
+            </div>
 
 
             <div className="row">
@@ -64,31 +91,27 @@ function Dashboard(
                                         </p>
                                     </Link>
 
-                                    <Link to={`/Kanbas/Courses/${course._id}/Home`}>
-                                        <span style={{ color: 'black' }}>
-                                            <FaBullhorn />
-                                        </span>
 
-                                        <span style={{ color: 'black', marginLeft: '20px' }}>
-                                            <FaRegFileAlt />
-                                        </span>
+                                    <div style={{ textAlign: "left" }}>
+                                        {/* Edit button */}
+                                        <button
+                                            style={{ marginRight: "10px", backgroundColor: "#007bff", color: "#fff", border: "none", borderRadius: "5px", padding: "8px 16px", cursor: "pointer" }}
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                setCourse(course);
+                                            }}
+                                        >
+                                            Edit
+                                        </button>
 
-                                        <span style={{ color: 'black', marginLeft: '20px' }}>
-                                            <LiaComments />
-                                        </span>
-                                    </Link>
-
-                                    {/* Edit button */}
-                                    <button onClick={(event) => {
-                                        event.preventDefault();
-                                        setCourse(course);
-                                    }}>
-                                        Edit
-                                    </button>
-
-
-                                    {/* Delete button */}
-                                    <button onClick={() => deleteCourse(course._id)}>Delete</button>
+                                        {/* Delete button */}
+                                        <button
+                                            style={{ backgroundColor: "#dc3545", color: "#fff", border: "none", borderRadius: "5px", padding: "8px 16px", cursor: "pointer" }}
+                                            onClick={() => deleteCourse(course)}
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

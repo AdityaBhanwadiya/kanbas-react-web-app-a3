@@ -71,22 +71,34 @@ function ModuleList() {
                 <hr />
             </div>
             <ul className="list-group" style={{ paddingTop: "10px" }}>
-                <li className="list-group-item">
-                    <button onClick={() => dispatch(addModule({ ...module, course: courseId }))}>
-                        Add</button>
-                    <button onClick={() => dispatch(updateModule(module))}>
+                <div style={{ width: "100%", margin: "0 auto", padding: "20px", border: "1px solid #ccc", borderRadius: "5px" }}>
+                    <input
+                        value={module.name || ''}
+                        className="form-control"
+                        style={{ marginBottom: "10px", padding: "8px", width: "100%", boxSizing: "border-box", border: "1px solid #ccc", borderRadius: "5px" }}
+                        placeholder="Module Name"
+                        onChange={(e) => dispatch(setModule({ ...module, name: e.target.value }))}
+                    />
+                    <textarea
+                        value={module.description || ''}
+                        className="form-control"
+                        style={{ marginBottom: "10px", padding: "8px", width: "100%", boxSizing: "border-box", border: "1px solid #ccc", borderRadius: "5px" }}
+                        placeholder="Module Description"
+                        onChange={(e) => dispatch(setModule({ ...module, description: e.target.value }))}
+                    />
+                    <button
+                        style={{ display: "block", width: "100%", padding: "10px", marginTop: "10px", backgroundColor: "#007bff", color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer" }}
+                        onClick={() => dispatch(addModule({ ...module, course: courseId }))}
+                    >
+                        Add
+                    </button>
+                    <button
+                        style={{ display: "block", width: "100%", padding: "10px", marginTop: "10px", backgroundColor: "#007bff", color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer" }}
+                        onClick={() => dispatch(updateModule(module))}
+                    >
                         Update
                     </button>
-
-                    <input value={module.name || ''}
-                        onChange={(e) => dispatch(setModule({ ...module, name: e.target.value }))
-                        } />
-                    <textarea value={module.description || ''}
-                        onChange={(e) =>
-                            dispatch(setModule({ ...module, description: e.target.value }))
-                        } />
-
-                </li>
+                </div>
 
 
                 {moduleList
@@ -98,25 +110,25 @@ function ModuleList() {
                             onClick={() => setSelectedModule(selectedModule === module ? null : module)}>
 
                             {/* Edit button */}
-                            <button onClick={() => dispatch(setModule(module))}>
-                                Edit
-                            </button>
-
-
-
-                            <button
-                                onClick={() => dispatch(deleteModule(module._id))}>
-                                Delete
-                            </button>
+                            
 
                             <div>
                                 <TbGripVertical className="me-2" />
                                 <FaCaretDown className="me-2" />
                                 {module.name}
                                 <span className="float-end">
-                                    <FaCheckCircle className="text-success" />
-                                    <FaPlusCircle className="ms-2" />
-                                    <FaEllipsisV className="ms-2" />
+                                <button style={{ marginRight: "10px", backgroundColor: "#007bff", color: "#fff", border: "none", borderRadius: "5px", padding: "8px 16px", cursor: "pointer" }}
+                                onClick={() => dispatch(setModule(module))}>
+                                Edit
+                            </button>
+
+
+
+                            <button
+                                style={{ backgroundColor: "#dc3545", color: "#fff", border: "none", borderRadius: "5px", padding: "8px 16px", cursor: "pointer" }}
+                                onClick={() => dispatch(deleteModule(module._id))}>
+                                Delete
+                            </button>
                                 </span>
                             </div>
                             {selectedModule === module && module.lessons && (
