@@ -67,7 +67,7 @@ function Assignments() {
             <Link to={`/Kanbas/Courses/${courseId}/Assignments/new`}>
                 <button
                     type="submit"
-                    className="btn btn-warning float-end me-1 wd-kanbas-save-profile"
+                    className="btn btn-danger float-end me-1 wd-kanbas-save-profile"
                     onClick={() => dispatch(setAssignment(intialAssignment))}
                 >
                     <i className="fa fa-plus"></i>
