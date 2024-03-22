@@ -107,7 +107,7 @@ function Dashboard(
                                         {/* Delete button */}
                                         <button
                                             style={{ backgroundColor: "#dc3545", color: "#fff", border: "none", borderRadius: "5px", padding: "8px 16px", cursor: "pointer" }}
-                                            onClick={() => deleteCourse(course)}
+                                            onClick={() => deleteCourse(course._id)}
                                         >
                                             Delete
                                         </button>
